@@ -12,7 +12,7 @@
 // 文件名
 #define fileName_caf @"demoRecord.caf"
 
-@interface ViewController ()
+@interface ViewController () // 录音和播放器的代理选择性添加：<AVAudioRecorderDelegate,AVAudioPlayerDelegate>
 
 // 录音文件绝对路径
 @property (nonatomic, copy) NSString *filepathCaf;
@@ -51,7 +51,7 @@
     [audioSession setActive:YES error:nil];
     
     // 2.开启定时器
-    [self timer];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(update) userInfo:nil repeats:YES];
 }
 
 #pragma mark -录音设置工具函数
@@ -66,7 +66,6 @@
         NSError *error=nil;
         
         _audioRecorder = [[AVAudioRecorder alloc]initWithURL:url settings:setting error:&error];
-        _audioRecorder.delegate = self;
         _audioRecorder.meteringEnabled = YES;// 监控声波
         if (error) {
             NSLog(@"创建录音机对象时发生错误，错误信息：%@",error.localizedDescription);
@@ -89,7 +88,6 @@
     
     //设置播放器属性
     _audioPlayer.numberOfLoops = 0;// 不循环
-    _audioPlayer.delegate = self;
     _audioPlayer.volume = 0.5; // 音量
     [_audioPlayer prepareToPlay];// 加载音频文件到缓存【这个函数在调用play函数时会自动调用】
     
@@ -101,25 +99,21 @@
     return _audioPlayer;
 }
 
-// 计时器get方法
-- (NSTimer *)timer {
-    if (!_timer) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:YES block:^(NSTimer * _Nonnull timer) {
-            if(_audioRecorder) {
-                // 1.更新录音时间,单位秒
-                int curInterval = [_audioRecorder currentTime];
-                _recordTime.text = [NSString stringWithFormat:@"%02d:%02d",curInterval/60,curInterval%60];
-                // 2.声波显示
-                //更新声波值
-                [self.audioRecorder updateMeters];
-                //第一个通道的音频，音频强度范围:[-160~0],这里调整到0~160
-                float power = [self.audioRecorder averagePowerForChannel:0] + 160;
-                [_processView setProgress:power/160.0];
-            }
-        }];
+// 定时更新
+- (void)update {
+    if(_audioRecorder) {
+        // 1.更新录音时间,单位秒
+        int curInterval = [_audioRecorder currentTime];
+        _recordTime.text = [NSString stringWithFormat:@"%02d:%02d",curInterval/60,curInterval%60];
+        // 2.声波显示
+        //更新声波值
+        [self.audioRecorder updateMeters];
+        //第一个通道的音频，音频强度范围:[-160~0],这里调整到0~160
+        float power = [self.audioRecorder averagePowerForChannel:0] + 160;
+        [_processView setProgress:power/160.0];
     }
-    return _timer;
 }
+
 
 // 录音设置
 -(NSDictionary *)getAudioSetting{

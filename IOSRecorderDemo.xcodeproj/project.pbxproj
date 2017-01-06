@@ -441,6 +441,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V4SYMZQA29;
 				INFOPLIST_FILE = IOSRecorderDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -457,6 +458,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V4SYMZQA29;
 				INFOPLIST_FILE = IOSRecorderDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -536,6 +538,7 @@
 				D21937F51E14E0E2004DB0DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D21937F61E14E0E2004DB0DA /* Build configuration list for PBXNativeTarget "IOSRecorderDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +547,7 @@
 				D21937F81E14E0E2004DB0DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D21937F91E14E0E2004DB0DA /* Build configuration list for PBXNativeTarget "IOSRecorderDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +556,7 @@
 				D21937FB1E14E0E2004DB0DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
